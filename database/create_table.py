@@ -4,8 +4,8 @@ def create_table() -> None:
     con = sqlite3.connect("data/links.db")
     con.execute("""\
 CREATE TABLE IF NOT EXISTS links (
-    codigo  varchar(12)      PRIMARY KEY,
-    url     varchar(2048)    NOT NULL
+    codigo  TEXT PRIMARY KEY CHECK(length(codigo) <= 12),
+    url     TEXT NOT NULL    CHECK(length(url) <= 2048)
 );""")
 
     con.close()
