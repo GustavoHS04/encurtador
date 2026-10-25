@@ -4,11 +4,15 @@ from fastapi.responses import RedirectResponse
 from schemas import NovoLink
 from queries.queries import inserir_link, buscar_link
 from services.codigo import gerar_codigo
+from services.hosts import host_proibido
 
 router = APIRouter()
 
 @router.post("/encurtar")
 def encurtar(novo: NovoLink, tam: int = Query(6, ge=4, le=12)) -> dict[str,str]:
+    if host_proibido(novo.url.host):
+        raise HTTPException(status_code=422, detail="Não é possível encurtar links que apontem para o próprio serviço")
+
     codigo = gerar_codigo(tam)
     inserir_link(codigo, str(novo.url))
 
