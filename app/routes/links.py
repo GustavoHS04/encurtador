@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import RedirectResponse
 
-from schemas import NovoLink
-from queries.queries import (
+from ..schemas import NovoLink
+from ..queries.queries import (
     inserir_link, buscar_link, registrar_acesso,
     buscar_acessos, buscar_top_acessos
 
 )
-from services.codigo import gerar_codigo
-from services.hosts import host_proibido
+from ..services.codigo import gerar_codigo
+from ..services.hosts import host_proibido
 
 router = APIRouter()
 
@@ -49,4 +49,3 @@ def acessar(codigo: str) -> RedirectResponse:
 
     registrar_acesso(codigo)
     return RedirectResponse(link_original)
-

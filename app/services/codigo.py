@@ -1,7 +1,7 @@
 import random
 import string
 
-from queries.queries import buscar_link
+from ..queries.queries import buscar_link
 
 ALFABETO = string.ascii_letters + string.digits
 

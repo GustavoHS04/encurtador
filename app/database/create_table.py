@@ -1,7 +1,10 @@
 import sqlite3
 
+from ..config import DATABASE_PATH
+
+
 def create_table() -> None:
-    con = sqlite3.connect("data/links.db")
+    con = sqlite3.connect(DATABASE_PATH)
     con.execute("""
 CREATE TABLE IF NOT EXISTS links (
     codigo  TEXT PRIMARY KEY CHECK(length(codigo) <= 12),

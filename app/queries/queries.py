@@ -1,10 +1,10 @@
 import sqlite3
 
-BD_PATH = "data/links.db"
+from ..config import DATABASE_PATH
 
 
 def inserir_link(codigo: str, url: str) -> None:
-    con = sqlite3.connect(BD_PATH)
+    con = sqlite3.connect(DATABASE_PATH)
 
     con.execute("INSERT INTO links VALUES (?, ?, 0);", (codigo, url))
     con.commit()
@@ -12,7 +12,7 @@ def inserir_link(codigo: str, url: str) -> None:
     con.close()
 
 def registrar_acesso(codigo: str) -> None:
-    con = sqlite3.connect(BD_PATH)
+    con = sqlite3.connect(DATABASE_PATH)
 
     con.execute("UPDATE links SET acessos = acessos + 1 WHERE codigo = ?", (codigo,))
     con.commit()
@@ -20,7 +20,7 @@ def registrar_acesso(codigo: str) -> None:
     con.close()
 
 def buscar_link(codigo: str) -> str | None:
-    con = sqlite3.connect(BD_PATH)
+    con = sqlite3.connect(DATABASE_PATH)
 
     resultado = con.execute("""
         SELECT url FROM links
@@ -35,7 +35,7 @@ def buscar_link(codigo: str) -> str | None:
     return resultado[0]
 
 def buscar_acessos(codigo: str) -> tuple[str, str, str | int] | None:
-    con = sqlite3.connect(BD_PATH)
+    con = sqlite3.connect(DATABASE_PATH)
 
     resultado = con.execute("""
         SELECT codigo, url, acessos
@@ -48,7 +48,7 @@ def buscar_acessos(codigo: str) -> tuple[str, str, str | int] | None:
     return resultado
 
 def buscar_top_acessos(limite: int = 5) -> list[str] | None:
-    con = sqlite3.connect(BD_PATH)
+    con = sqlite3.connect(DATABASE_PATH)
 
     resultado = con.execute("""
         SELECT codigo, url, acessos
