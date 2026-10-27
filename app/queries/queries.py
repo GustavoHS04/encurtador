@@ -1,4 +1,4 @@
-from database.connect_db import connect
+from ..database.connect_db import connect
 
 def inserir_link(codigo: str, url: str) -> None:
     con = connect()
