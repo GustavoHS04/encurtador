@@ -14,6 +14,9 @@ router = APIRouter()
 
 @router.post("/encurtar")
 def encurtar(novo: NovoLink, tam: int = Query(6, ge=4, le=12)) -> dict[str,str]:
+    if novo.url.host is None:
+        raise HTTPException(status_code=404, detail="Host não encontrado")
+
     if host_proibido(novo.url.host):
         raise HTTPException(status_code=422, detail="Não é possível encurtar links que apontem para o próprio serviço")
 
@@ -26,7 +29,7 @@ def encurtar(novo: NovoLink, tam: int = Query(6, ge=4, le=12)) -> dict[str,str]:
 def top_acessos(limite: int = Query(5, ge=1, le=50)):
     ranking = buscar_top_acessos(limite)
 
-    if top_acessos is None:
+    if ranking is None:
         raise HTTPException(status_code=404, detail="Nenhum link encontrado")
 
     return [{"codigo": c, "url": u, "acessos": a} for c, u, a in ranking]
