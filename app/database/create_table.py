@@ -5,7 +5,8 @@ def create_links() -> None:
     con.execute("""
 CREATE TABLE IF NOT EXISTS links (
     codigo  TEXT PRIMARY KEY CHECK(length(codigo) <= 12),
-    url     TEXT NOT NULL    CHECK(length(url) <= 2048)
+    url     TEXT NOT NULL    CHECK(length(url) <= 2048),
+    acessos INTEGER NOT NULL DEFAULT 0
 );""")
 
     con.close()

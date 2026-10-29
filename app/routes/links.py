@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import RedirectResponse
 
+from ..config import BASE_URL
 from ..schemas import NovoLink
 from ..queries.queries import (
     inserir_link, buscar_link, registrar_acesso,
@@ -23,7 +24,7 @@ def encurtar(novo: NovoLink, tam: int = Query(6, ge=4, le=12)) -> dict[str,str]:
     codigo = gerar_codigo(tam)
     inserir_link(codigo, str(novo.url))
 
-    return {"codigo": codigo, "link_curto": f"http://127.0.0.1/{codigo}"}
+    return {"codigo": codigo, "link_curto": f"{BASE_URL}/{codigo}"}
 
 @router.get("/top")
 def top_acessos(limite: int = Query(5, ge=1, le=50)):
