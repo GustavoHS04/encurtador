@@ -11,8 +11,9 @@ def inserir_link(codigo: str, url: str) -> None:
 def registrar_acesso(codigo: str) -> None:
     con = connect()
 
-    con.execute("UPDATE links SET acessos = acessos + 1 WHERE codigo = ?", (codigo,))
-    con.commit()
+    with con:
+        con.execute("UPDATE links SET acessos = acessos + 1 WHERE codigo = ?", (codigo,))
+        con.execute("INSERT INTO acessos (codigo) VALUES (?)", (codigo,))
 
     con.close()
 
