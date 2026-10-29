@@ -8,8 +8,8 @@ códigos e consultar estatísticas de acesso. A aplicação usa FastAPI e SQLite
 - Python 3.10 ou superior
 - `pip`
 
-O `requirements.txt` atual não lista as dependências usadas pela aplicação.
-Instale-as diretamente no ambiente virtual, como mostrado abaixo.
+As dependências da aplicação e dos testes estão listadas em
+`requirements.txt`.
 
 ## Instalação e execução
 
@@ -19,7 +19,7 @@ Na raiz do projeto:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install fastapi uvicorn pytest
+python -m pip install -r requirements.txt
 mkdir -p data
 uvicorn app.main:app --reload
 ```
